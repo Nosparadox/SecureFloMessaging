@@ -1,18 +1,20 @@
 <resources>
-    <string name="app_name">SecureFloMessaging</string>
-    <string name="title_activity_login">Sign in</string>
-
-    <!-- Strings related to login -->
+    <string name="app_name">RESTService</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_name">Name</string>
+    <string name="prompt_phoneNumber">Phone Number</string>
+    <string name="prompt_note">Note</string>
+    <string name="action_register">Register</string>
     <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_update">Update</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_sign_out">Sign out</string>
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_inbox">Inbox</string>
+    <string name="error_url_not_found">Invalid URL! PHP file could not be found</string>
+    <string name="error_password_length">Password length must be at least 5 characters</string>
+    <string name="info_label">User Information</string>
+
 </resources>
