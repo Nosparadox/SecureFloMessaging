@@ -28,7 +28,8 @@ public class Constants {
 
     // Constants used in JSON Parsing or values attached in a URL server connection
     public static final String AUTHORIZATION = "Authorization";
-    public static final String EMAIL = "user_name";
+    public static final String USERNAME = "username";
+    public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String GRANT_TYPE = "grant_type";
     public static final String CLIENT_CREDENTIALS = "client_credentials";

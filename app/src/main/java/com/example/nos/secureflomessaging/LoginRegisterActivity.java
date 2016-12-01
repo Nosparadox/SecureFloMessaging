@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class LoginRegisterActivity extends AppCompatActivity {
     private UserLoginRegisterTask mUserLoginRegisterTask = null;
-    private EditText mEmailView;
+    private EditText mUsernameView;
     private EditText mPasswordView;
 
     @Override
@@ -32,7 +32,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        mEmailView = (EditText) findViewById(R.id.email);
+        mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
     }
 
@@ -41,10 +41,10 @@ public class LoginRegisterActivity extends AppCompatActivity {
             return;
         }
 
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
-        String email = mEmailView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -56,20 +56,20 @@ public class LoginRegisterActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if(TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+        if(TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
-        } else if(!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        } else if(!isEmailValid(username)) {
+            mUsernameView.setError(getString(R.string.error_invalid_email));
+            focusView = mUsernameView;
             cancel = true;
         }
 
         if(cancel) {
             focusView.requestFocus();
         } else {
-            mUserLoginRegisterTask = new UserLoginRegisterTask(email, password, view.getId() == R.id.email_sign_in_button);
+            mUserLoginRegisterTask = new UserLoginRegisterTask(username, password, view.getId() == R.id.email_sign_in_button);
             mUserLoginRegisterTask.execute((Void) null);
         }
     }
@@ -80,7 +80,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
     private boolean isEmailValid(String email) {
         return email.length() > 4;
-        //return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        //eturn Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void showProgress(final boolean isShow) {
@@ -92,9 +92,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
         private final ContentValues contentValues = new ContentValues();
         private boolean mIsLogin;
 
-        UserLoginRegisterTask(String email, String password, boolean isLogin) {
+        UserLoginRegisterTask(String username, String password, boolean isLogin) {
             super(LoginRegisterActivity.this);
-            contentValues.put(Constants.EMAIL, email);
+            contentValues.put(Constants.USERNAME, username);
             contentValues.put(Constants.PASSWORD, password);
             contentValues.put(Constants.GRANT_TYPE, Constants.CLIENT_CREDENTIALS);
             mIsLogin = isLogin;
@@ -119,7 +119,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 if(mIsLogin) {
                     User user = new User();
                     user.setId(obj.optLong(Constants.ID));
-                    user.setEmail(contentValues.getAsString(Constants.EMAIL));
+                    user.setUsername(contentValues.getAsString(Constants.USERNAME));
                     user.setPassword(contentValues.getAsString(Constants.PASSWORD));
                     RESTServiceApplication.getInstance().setUser(user);
                     RESTServiceApplication.getInstance().setAccessToken(
