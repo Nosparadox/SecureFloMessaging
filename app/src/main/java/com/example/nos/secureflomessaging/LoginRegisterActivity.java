@@ -3,11 +3,13 @@ package com.example.nos.secureflomessaging;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.nos.secureflomessaging.data.User;
 import com.example.nos.secureflomessaging.webservices.WebServiceTask;
@@ -23,6 +25,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
     private UserLoginRegisterTask mUserLoginRegisterTask = null;
     private EditText mUsernameView;
     private EditText mPasswordView;
+    int failed = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +85,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
     private boolean isEmailValid(String email) {
         return email.length() > 4;
-        //eturn Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        //return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void showProgress(final boolean isShow) {
@@ -124,6 +129,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     RESTServiceApplication.getInstance().setUser(user);
                     RESTServiceApplication.getInstance().setAccessToken(
                             obj.optJSONObject(Constants.ACCESS).optString(Constants.ACCESS_TOKEN));
+
                     return true;
                 } else {
                     mIsLogin = true;
@@ -131,8 +137,18 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     return true;
                 }
             }
+            failed++;
+            System.out.println("Failed Attempts: " + failed);
+
+
+            if(failed > 2){
+                System.out.println("Login attempts exceeded. Terminating Application");
+                finish();
+
+            }
             return false;
         }
+
 
         @Override
         public void performSuccessfulOperation() {

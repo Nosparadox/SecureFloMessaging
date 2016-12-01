@@ -11,7 +11,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_reset">Reset</string>
     <string name="action_sign_out">Sign out</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_email">This username is invalid</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_url_not_found">Invalid URL! PHP file could not be found</string>
     <string name="error_password_length">Password length must be at least 5 characters</string>
