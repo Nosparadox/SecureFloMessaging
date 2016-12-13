@@ -2,19 +2,25 @@
     <string name="app_name">SecureFloMessaging</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_msg">Message</string>
     <string name="prompt_name">Name</string>
     <string name="prompt_phoneNumber">Phone Number</string>
-    <string name="prompt_note">Note</string>
+    <string name="prompt_note">Message: max length 100 characters</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_update">Update</string>
     <string name="action_delete">Delete</string>
     <string name="action_reset">Reset</string>
+    <string name="write">send</string>
+    <string name="to_who">To</string>
+    <string name="to">to</string>
+    <string name="refreshmsg">refresh</string>
     <string name="action_sign_out">Sign out</string>
     <string name="error_invalid_email">This username is invalid</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_url_not_found">Invalid URL! PHP file could not be found</string>
     <string name="error_password_length">Password length must be at least 5 characters</string>
     <string name="inbox_label">Inbox</string>
+    <string name="show_username">ContentValues.get(username)</string>
 
 </resources>

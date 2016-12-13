@@ -21,8 +21,8 @@ public class Constants {
     public static final String END_POINT = "http://galadriel.cs.utsa.edu/~group2/api";
     public static final String LOGIN_URL = END_POINT + "/login.php";
     public static final String SIGNUP_URL = END_POINT + "/signup.php";
-    public static final String INFO_URL = END_POINT + "/info.php";
-    public static final String UPDATE_URL = END_POINT + "/update.php";
+    public static final String INFO_URL = END_POINT + "/info2.php";
+    public static final String UPDATE_URL = END_POINT + "/update2.php";
     public static final String DELETE_URL = END_POINT + "/delete.php";
     public static final String RESET_URL = END_POINT + "/reset.php";
 
@@ -43,6 +43,7 @@ public class Constants {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String NOTE = "note";
     public static final String NAME = "name";
+    public static final String ISLOCKED = "isLocked";
 
     public static final String CONNECTION_MESSAGE = "No Internet Connection!";
 

@@ -3,12 +3,16 @@ package com.example.nos.secureflomessaging;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nos.secureflomessaging.data.User;
@@ -25,7 +29,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
     private UserLoginRegisterTask mUserLoginRegisterTask = null;
     private EditText mUsernameView;
     private EditText mPasswordView;
+    private TextView mResetLink;
     int failed = 0;
+    private Boolean exit = false;
 
 
 
@@ -36,9 +42,51 @@ public class LoginRegisterActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+
+    }
+
     private void initViews() {
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
+        mResetLink = (TextView) findViewById(R.id.reset_link);
+
+        mResetLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetLoginPrompt();
+            }
+        });
+    }
+
+    public void resetLoginPrompt(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginRegisterActivity.this);
+
+        builder.setTitle("Forgot Username/Password?");
+        final SpannableString s =
+                new SpannableString("wingate670@gmail.com");
+        Linkify.addLinks(s, Linkify.WEB_URLS);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setMessage("Please contact the system admin at " + s);
+        builder.setCancelable(true);
+        builder.setPositiveButton("Dismiss", null);
+        builder.show();
+
     }
 
     public void attemptLoginRegister(View view) {
@@ -155,6 +203,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginRegisterActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
 
         }
     }

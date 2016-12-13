@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,13 +22,19 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:clickable="true"
+            tools:clickable="true">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -79,7 +86,39 @@
                 android:text="@string/action_register"
                 android:textStyle="bold"
                 android:onClick="attemptLoginRegister"/>
+
+            <TextView
+                android:id="@+id/reset_link"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Forgot Username/Password?"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:clickable="true"
+                tools:clickable="true"
+                tools:onClick="MyOtherAlertDialog" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:src="@mipmap/ps_logo"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                app:srcCompat="@mipmap/ps_logo"/>
+            <TextView
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Copyright © 2016. Pedestrian Software. All rights reserved"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:gravity="center_horizontal" />
         </LinearLayout>
     </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>
