@@ -1,20 +1,29 @@
 package com.example.nos.secureflomessaging;
 
+import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nos.secureflomessaging.data.User;
 import com.example.nos.secureflomessaging.webservices.WebServiceTask;
 import com.example.nos.secureflomessaging.webservices.WebServiceUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -25,6 +34,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
     private UserLoginRegisterTask mUserLoginRegisterTask = null;
     private EditText mUsernameView;
     private EditText mPasswordView;
+    private TextView mResetLink;
+    private Boolean exit = false;
+    private Boolean lockout = false;
     int failed = 0;
 
 
@@ -36,10 +48,70 @@ public class LoginRegisterActivity extends AppCompatActivity {
         initViews();
     }
 
+
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+
+    }
+
     private void initViews() {
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
+        mResetLink = (TextView) findViewById(R.id.reset_link);
+
+        mResetLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetLoginPrompt();
+            }
+        });
     }
+
+    public void resetLoginPrompt(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginRegisterActivity.this);
+
+        builder.setTitle("Forgot Username/Password?");
+        final SpannableString s =
+                new SpannableString("wingate670@gmail.com");
+        Linkify.addLinks(s, Linkify.WEB_URLS);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setMessage("Please contact the system admin at " + s);
+        builder.setCancelable(true);
+        builder.setPositiveButton("Dismiss", null);
+        builder.show();
+
+    }
+
+    public void lockoutUser(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginRegisterActivity.this);
+        builder.setTitle("Too many attempts");
+        final SpannableString s =
+                new SpannableString("wingate670@gmail.com");
+        Linkify.addLinks(s, Linkify.WEB_URLS);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setMessage("Account locked. Please contact the system admin at " + s);
+        builder.setCancelable(true);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+
+    }
+
+
 
     public void attemptLoginRegister(View view) {
         if(mUserLoginRegisterTask != null) {
@@ -120,6 +192,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
             JSONObject obj = WebServiceUtils.requestJSONObject(mIsLogin ? Constants.LOGIN_URL : Constants.SIGNUP_URL,
                     WebServiceUtils.METHOD.POST, contentValues, true);
             mUserLoginRegisterTask = null;
+            String tempUser;
+            User storeUser = new User();
+            storeUser.setUsername(contentValues.getAsString(Constants.USERNAME));
+            storeUser.setId(obj.optLong(Constants.ID));
+            tempUser = storeUser.getUsername();
             if(!hasError(obj)) {
                 if(mIsLogin) {
                     User user = new User();
@@ -137,17 +214,19 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     return true;
                 }
             }
-            failed++;
-            System.out.println("Failed Attempts: " + failed);
+            else {
+                failed++;
+                System.out.println(tempUser + " Failed Attempts: " + failed);
 
+                if (failed > 2) {
+                    System.out.println("Login attempts exceeded. Terminating Application");
+                    //finish();
 
-            if(failed > 2){
-                System.out.println("Login attempts exceeded. Terminating Application");
-                finish();
-
+                }
             }
             return false;
         }
+
 
 
         @Override

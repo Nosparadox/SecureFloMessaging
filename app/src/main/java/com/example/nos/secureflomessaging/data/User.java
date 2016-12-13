@@ -12,6 +12,15 @@ public class User {
     private String note;
     private String password;
     private long id;
+    private int isLocked;
+
+    public int getIsLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(int isLocked) {
+        this.isLocked = isLocked;
+    }
 
     public String getName() {
         return name;
