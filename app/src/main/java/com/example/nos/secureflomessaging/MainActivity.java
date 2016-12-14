@@ -16,11 +16,12 @@ import com.example.nos.secureflomessaging.webservices.WebServiceUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+
 /**
  * Created by Nos on 11/26/2016.
  */
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mNoteText;
     private EditText mSendTo;
     Handler mHandler;
+    private boolean exit = false;
 
 
     @Override
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "Timed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Message Timed Out", Toast.LENGTH_SHORT).show();
                 mreset = new UserEditTask2();
                 mreset.execute();
                 refreshmsg();
@@ -50,6 +52,26 @@ public class MainActivity extends AppCompatActivity {
         showProgress(true);
         mUserInfoTask = new UserInfoTask();
         mUserInfoTask.execute();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            System.exit(0);
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Pressing Back again will logout",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
 
     }
     /*private final Runnable m_Runnable = new Runnable() {

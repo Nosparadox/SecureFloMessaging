@@ -191,7 +191,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
             if(failed > 2){
                 System.out.println("Login attempts exceeded. Terminating Application");
-                finish();
+                System.exit(0);
 
             }
             return false;
