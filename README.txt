@@ -5,6 +5,8 @@ Our current version is 1.1 running Android Ice Cream Sandwich and higher.
 We hope you enjoy our application and thank you for taking the time to test it. 
 If you find any bugs, please message our APO at bue135@my.utsa.edu
 
+Developed by Brandon Lyssy, Daniel Duran, George Wilborn, Polly Zhou, Joshua Martinez
+
 To Install:
 
 Using Android Studio
